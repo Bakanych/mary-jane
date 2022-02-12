@@ -23,28 +23,13 @@ function tree(
   return target;
 }
 
-// get node children
-
-// get all nodes from tree paths from root to leaf and put them to arrays
-function getAllNodes(node: Node): Node[] {
-  let nodes: Node[] = [];
-  if (node.childNodes.length == 0) {
-    nodes.push(node);
-    return nodes;
-  }
-  node.childNodes.forEach((child) => {
-    nodes = nodes.concat(getAllNodes(child));
-  });
-  return nodes;
-}
-
 function getPath(): HTMLElement[] {
   function iterate(node: Element, res: Element[]): void {
     let children = node.querySelectorAll("ul>li");
     if (children.length) {
       return children.forEach((x) => iterate(x, res.concat(x)));
     }
-    if (res.length >= 4) result.push(res);
+    if (res.length >= getDepth()) result.push(res);
   }
 
   const target = document.getElementById("tree")!;
@@ -83,7 +68,10 @@ function startTimer(target: HTMLElement) {
   return interval;
 }
 
+function getDepth() {
+  return 3;
+}
 function render() {
   let treeElement = document.getElementById("tree");
-  tree("Mary", "Jain", 4, treeElement!);
+  tree("Mary", "Jain", getDepth(), treeElement!);
 }

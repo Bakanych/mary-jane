@@ -6,3 +6,8 @@ li > ul {
   margin: 0;
   border-left: dashed 0.5px;
 }
+
+.level {
+  border-radius: 50%;
+  min-width: 40px;
+}

@@ -13,7 +13,12 @@
   </head>
 
   <body>
-    <h1>Mary-Jane game</h1>
+    <h1>
+      Mary-Jane game of
+      <button class="primary level">3</button>
+      <button class="tertiary level">4</button>
+      <button class="secondary level">5</button>
+    </h1>
     <p>code to win</p>
     <button
       id="start"
@@ -25,11 +30,18 @@
     </button>
     <button onclick="document.location.reload()">RESET</button>
     <p id="path">
-      click the following path in the node tree:
+      your path:
       <!-- <mark></mark>.<mark></mark>.<mark></mark>.<mark></mark> -->
     </p>
-    <div>
-      <ul id="tree"></ul>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <ul id="tree"></ul>
+        </div>
+        <div class="col-sm-6">
+          <h3>Results</h3>
+        </div>
+      </div>
     </div>
     <script src="index.js"></script>
     <script>
