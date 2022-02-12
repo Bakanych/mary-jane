@@ -38,7 +38,7 @@ function getPath() {
     const randomPath = result
         .sort(() => Math.random() - 0.5)[0]
         .map((x) => x.querySelector("button"));
-    pathElement.innerHTML += randomPath.map((x) => x === null || x === void 0 ? void 0 : x.outerHTML).join(" . ");
+    pathElement.innerHTML += randomPath.map((x) => x === null || x === void 0 ? void 0 : x.innerHTML).join(" . ");
     // randomPath.forEach((x) => x!.classList.add("secondary"));
     return randomPath;
 }
@@ -64,11 +64,16 @@ function startTimer() {
         startButton.innerText = `${seconds}.${milliseconds}`;
     }, 1);
 }
-function render(value = level) {
+function render(depth = level) {
+    var _a, _b;
     //   document.location.reload();
+    document.querySelectorAll("button.level").forEach((x) => {
+        x.classList.remove("primary");
+    });
+    (_b = (_a = depth) === null || _a === void 0 ? void 0 : _a.classList) === null || _b === void 0 ? void 0 : _b.add("primary");
     treeRoot.innerHTML = "";
     stopTimer();
-    level = +value;
-    console.log(level);
+    level =
+        depth instanceof HTMLElement ? +depth.innerHTML : depth;
     tree("Mary", "Jain", level, treeRoot);
 }

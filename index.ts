@@ -44,7 +44,7 @@ function getPath(): HTMLElement[] {
   const randomPath = result
     .sort(() => Math.random() - 0.5)[0]
     .map((x) => x.querySelector("button")!);
-  pathElement.innerHTML += randomPath.map((x) => x?.outerHTML).join(" . ");
+  pathElement.innerHTML += randomPath.map((x) => x?.innerHTML).join(" . ");
   // randomPath.forEach((x) => x!.classList.add("secondary"));
 
   return randomPath;
@@ -71,11 +71,16 @@ function startTimer() {
   }, 1);
 }
 
-function render(value: string | number = level) {
+function render(depth: HTMLElement | number = level) {
   //   document.location.reload();
+  document.querySelectorAll("button.level").forEach((x) => {
+    x.classList.remove("primary");
+  });
+  (depth as HTMLElement)?.classList?.add("primary");
   treeRoot.innerHTML = "";
   stopTimer();
-  level = +value;
-  console.log(level);
+
+  level =
+    depth instanceof HTMLElement ? +(depth as HTMLElement).innerHTML : depth;
   tree("Mary", "Jain", level, treeRoot!);
 }
