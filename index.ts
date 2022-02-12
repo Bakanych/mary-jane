@@ -1,6 +1,7 @@
 let level = 3;
 const treeRoot = document.getElementById("tree")!;
 const pathElement = document.getElementById("path")!;
+const startButton = document.getElementById("start")!;
 let timer: number;
 
 function tree(
@@ -49,16 +50,17 @@ function getPath(): HTMLElement[] {
   return randomPath;
 }
 
+function stopTimer() {
+  if (!timer) return false;
+  clearInterval(timer);
+  startButton.innerText = "start";
+  pathElement.innerHTML = "";
+  timer = 0;
+  return true;
+}
 function startTimer() {
-  let startButton = document.getElementById("start")!;
-  if (timer) {
-    clearInterval(timer);
-    startButton.innerText = "start";
-    pathElement.innerHTML = "";
-    timer = 0;
-    return;
-  }
-  const path = getPath();
+  if (stopTimer()) return;
+  getPath();
   let start = Date.now();
   timer = setInterval(() => {
     let now = Date.now();
@@ -72,11 +74,7 @@ function startTimer() {
 function render(value: string | number = level) {
   //   document.location.reload();
   treeRoot.innerHTML = "";
-  if (timer) {
-    clearInterval(timer);
-    let startButton = document.getElementById("start");
-    startButton!.innerText = "start";
-  }
+  stopTimer();
   level = +value;
   console.log(level);
   tree("Mary", "Jain", level, treeRoot!);
