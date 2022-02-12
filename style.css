@@ -1,0 +1,13 @@
+* {
+  background-color: #161b17;
+  color: #fff;
+  /* margin: 0;
+  padding: 0; */
+}
+
+li > ul {
+  list-style: none;
+  padding-left: 1em;
+  margin: 0;
+  border-left: dashed 0.5px;
+}
