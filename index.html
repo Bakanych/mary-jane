@@ -4,13 +4,32 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://minicss.org/flavorFiles/mini-dark.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
     <title>Mary-Jane</title>
   </head>
 
   <body>
-    <h1>Mary-Jane</h1>
-    <div id="tree"></div>
+    <h1>Mary-Jane game</h1>
+    <p>code to win</p>
+    <button
+      id="start"
+      class="secondary"
+      style="min-width: 80px"
+      onclick="startTimer(this)"
+    >
+      START
+    </button>
+    <button onclick="document.location.reload()">RESET</button>
+    <div>
+      <ul id="tree"></ul>
+    </div>
     <script src="index.js"></script>
+    <script>
+      window.onload = render;
+    </script>
   </body>
 </html>

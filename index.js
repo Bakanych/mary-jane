@@ -15,7 +15,20 @@ function tree(a, b, depth, target) {
     });
     return target;
 }
-const treeElement = document.getElementById("tree");
-const ul = document.createElement("ul");
-tree("Mary", "Jain", 4, ul);
-treeElement.appendChild(ul);
+function startTimer(target) {
+    target.setAttribute("disabled", "true");
+    let start = Date.now();
+    let interval = setInterval(() => {
+        let now = Date.now();
+        let diff = now - start;
+        // get seconds and milliseconds
+        let seconds = Math.floor(diff / 1000);
+        let milliseconds = diff % 1000;
+        target.innerText = `${seconds}.${milliseconds}`;
+    }, 1);
+    return interval;
+}
+function render() {
+    let treeElement = document.getElementById("tree");
+    tree("Mary", "Jain", 4, treeElement);
+}
