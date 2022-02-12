@@ -1,4 +1,8 @@
 "use strict";
+let level = 3;
+const treeRoot = document.getElementById("tree");
+const pathElement = document.getElementById("path");
+let timer;
 function tree(a, b, depth, target) {
     if (depth == 0) {
         return target;
@@ -6,13 +10,13 @@ function tree(a, b, depth, target) {
     [a, b]
         .sort(() => Math.random() - 0.5)
         .forEach((x) => {
-        let link = document.createElement("a");
+        let link = document.createElement("button");
         link.innerHTML = `<mark>${x}</mark>`;
         let li = document.createElement("li");
         let ul = document.createElement("ul");
-        //   li.innerHTML = x;
+        li.innerHTML = `<button class=' node'>${x}</button>`;
         target.appendChild(li);
-        li.appendChild(link);
+        //   li.appendChild(link);
         li.appendChild(ul);
         tree(a, b, depth - 1, ul);
     });
@@ -24,45 +28,47 @@ function getPath() {
         if (children.length) {
             return children.forEach((x) => iterate(x, res.concat(x)));
         }
-        if (res.length >= getDepth())
+        if (res.length >= level)
             result.push(res);
     }
     const target = document.getElementById("tree");
     let result = [];
     iterate(target, []);
-    const pathElement = document.getElementById("path");
     const randomPath = result
         .sort(() => Math.random() - 0.5)[0]
-        .map((x) => {
-        const mark = x.querySelector("mark");
-        //   pathElement.appendChild(mark);
-        return mark;
-    });
-    pathElement.innerHTML += randomPath.map((x) => x === null || x === void 0 ? void 0 : x.outerHTML).join(".");
+        .map((x) => x.querySelector("button"));
+    pathElement.innerHTML += randomPath.map((x) => x === null || x === void 0 ? void 0 : x.outerHTML).join(" . ");
     // randomPath.forEach((x) => x!.classList.add("secondary"));
     return randomPath;
 }
-function startTimer(target) {
-    var _a, _b;
-    target.setAttribute("disabled", "true");
+function startTimer() {
+    let startButton = document.getElementById("start");
+    if (timer) {
+        clearInterval(timer);
+        startButton.innerText = "start";
+        pathElement.innerHTML = "";
+        timer = 0;
+        return;
+    }
     const path = getPath();
-    (_b = (_a = document
-        .getElementById("path")) === null || _a === void 0 ? void 0 : _a.querySelectorAll("mark")) === null || _b === void 0 ? void 0 : _b.forEach((x, i) => (x.innerText = path[i].innerText));
     let start = Date.now();
-    let interval = setInterval(() => {
+    timer = setInterval(() => {
         let now = Date.now();
         let diff = now - start;
-        // get seconds and milliseconds
         let seconds = Math.floor(diff / 1000);
         let milliseconds = diff % 1000;
-        target.innerText = `${seconds}.${milliseconds}`;
+        startButton.innerText = `${seconds}.${milliseconds}`;
     }, 1);
-    return interval;
 }
-function getDepth() {
-    return 3;
-}
-function render() {
-    let treeElement = document.getElementById("tree");
-    tree("Mary", "Jain", getDepth(), treeElement);
+function render(value = level) {
+    //   document.location.reload();
+    treeRoot.innerHTML = "";
+    if (timer) {
+        clearInterval(timer);
+        let startButton = document.getElementById("start");
+        startButton.innerText = "start";
+    }
+    level = +value;
+    console.log(level);
+    tree("Mary", "Jain", level, treeRoot);
 }

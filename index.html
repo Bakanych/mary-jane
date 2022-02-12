@@ -13,39 +13,39 @@
   </head>
 
   <body>
-    <h1>
-      Mary-Jane game of
-      <button class="primary level">3</button>
-      <button class="tertiary level">4</button>
-      <button class="secondary level">5</button>
-    </h1>
-    <p>code to win</p>
-    <button
-      id="start"
-      class="secondary"
-      style="min-width: 80px"
-      onclick="startTimer(this)"
-    >
-      START
-    </button>
-    <button onclick="document.location.reload()">RESET</button>
-    <p id="path">
-      your path:
-      <!-- <mark></mark>.<mark></mark>.<mark></mark>.<mark></mark> -->
-    </p>
     <div class="container">
       <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10">
+          <h1>
+            Mary-Jane game of
+            <button onclick="render(this.innerText)" class="primary level">
+              3
+            </button>
+            <button onclick="render(this.innerText)" class="tertiary level">
+              4
+            </button>
+            <button onclick="render(this.innerText)" class="secondary level">
+              5
+            </button>
+            <button id="start" class="secondary" onclick="startTimer(this)">
+              start
+            </button>
+          </h1>
+          <pre>> document.getElementById("start").click()</pre>
+          <button onclick="document.location.reload()">RESET</button>
+          <p>your path:&nbsp;<span id="path"></span></p>
           <ul id="tree"></ul>
         </div>
-        <div class="col-sm-6">
-          <h3>Results</h3>
+        <div class="col-sm-1">
+          <!-- <h1>Results</h1>
+          <p>test p</p> -->
         </div>
       </div>
     </div>
     <script src="index.js"></script>
     <script>
-      window.onload = render;
+      window.onload = render();
     </script>
   </body>
 </html>

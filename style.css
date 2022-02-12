@@ -1,3 +1,9 @@
+:root {
+  --base-root-font-size: 18px;
+}
+html {
+  font-size: var(--base-root-font-size);
+}
 ul {
   list-style: none;
 }
@@ -9,5 +15,16 @@ li > ul {
 
 .level {
   border-radius: 50%;
-  min-width: 40px;
+  min-width: calc(var(--base-root-font-size) * 2.7);
+  aspect-ratio: 1 / 1;
+}
+
+.node {
+  margin: 0;
+  padding: 0;
+}
+
+button#start {
+  min-width: calc(var(--base-root-font-size) * 6);
+  text-transform: uppercase;
 }
