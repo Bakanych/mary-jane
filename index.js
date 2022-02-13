@@ -1,11 +1,10 @@
 "use strict";
 let level = 3;
+let destiny = [];
 const mary = "Mary";
 const jane = "Jane";
 const treeRoot = document.getElementById("tree");
 const pathElement = document.getElementById("path");
-// TODO: start timer if path element is not empty
-let destiny = [];
 const startButton = document.getElementById("start");
 let timer;
 function generateTree(a, b, depth, target) {
@@ -33,38 +32,31 @@ function onNodeClick(node) {
         return;
     let i = level - 1;
     let parent = node.parentElement;
-    while (parent) {
+    while (parent && parent !== treeRoot) {
         if (!(parent instanceof HTMLLIElement)) {
             parent = parent.parentElement;
             continue;
         }
-        if (parent.firstChild.innerText !== destiny[i])
-            return;
-        console.log(parent);
+        if (parent.firstChild.innerText !== destiny[i]) {
+            break;
+        }
         i--;
         parent = parent.parentElement;
     }
-    // win
-    clearInterval(timer);
+    if (i == -1) {
+        clearInterval(timer);
+        startButton.className = "tertiary";
+        return;
+    }
+    wasted();
 }
-function showPath() {
-    pathElement.innerHTML += destiny.join(" . ");
-}
-// function stopTimer() {
-//   if (!timer) return false;
-//   clearInterval(timer);
-//   startButton.innerText = "start";
-//   pathElement.innerHTML = "";
-//   timer = 0;
-//   document.querySelectorAll<HTMLButtonElement>("button.node").forEach((x) => {
-//     x.onclick = null;
-//   });
-//   return true;
-// }
-function startTimer() {
-    const currentLevelButton = document.querySelector("button.level.primary");
-    render(currentLevelButton);
-    showPath();
+function start() {
+    startButton.setAttribute("disabled", "true");
+    stop();
+    treeRoot.innerHTML = "";
+    generateTree(mary, jane, level, treeRoot);
+    destiny = Array.from({ length: level }, () => [mary, jane][Math.random() > 0.5 ? 0 : 1]);
+    pathElement.innerHTML = destiny.join(" . ");
     let start = Date.now();
     timer = setInterval(() => {
         let now = Date.now();
@@ -73,20 +65,30 @@ function startTimer() {
         let milliseconds = diff % 1000;
         startButton.innerText = `${seconds}.${milliseconds}`;
     }, 1);
+    startButton.removeAttribute("disabled");
 }
-function render(caller) {
+function stop() {
+    clearInterval(timer);
+    startButton.className = "secondary";
+}
+function wasted() {
+    stop();
+    startButton.innerText = "wasted";
+}
+function onChangeLevel(button) {
     var _a;
+    if (button.classList.contains("primary"))
+        return;
+    stop();
     document.querySelectorAll("button.level").forEach((x) => {
         x.classList.remove("primary");
     });
-    (_a = caller.classList) === null || _a === void 0 ? void 0 : _a.add("primary");
+    (_a = button.classList) === null || _a === void 0 ? void 0 : _a.add("primary");
     treeRoot.innerHTML = "";
     if (timer)
         clearInterval(timer);
     startButton.innerText = "start";
     pathElement.innerHTML = "";
     timer = 0;
-    level = +caller.innerHTML;
-    generateTree(mary, jane, level, treeRoot);
-    destiny = Array.from({ length: level }, (v, i) => [mary, jane][Math.random() > 0.5 ? 0 : 1]);
+    level = +button.innerHTML;
 }
