@@ -64,16 +64,15 @@ function startTimer() {
         startButton.innerText = `${seconds}.${milliseconds}`;
     }, 1);
 }
-function render(depth = level) {
-    var _a, _b;
+function render(depth) {
+    var _a;
     //   document.location.reload();
     document.querySelectorAll("button.level").forEach((x) => {
         x.classList.remove("primary");
     });
-    (_b = (_a = depth) === null || _a === void 0 ? void 0 : _a.classList) === null || _b === void 0 ? void 0 : _b.add("primary");
+    (_a = depth.classList) === null || _a === void 0 ? void 0 : _a.add("primary");
     treeRoot.innerHTML = "";
     stopTimer();
-    level =
-        depth instanceof HTMLElement ? +depth.innerHTML : depth;
+    level = +depth.innerHTML;
     tree("Mary", "Jain", level, treeRoot);
 }

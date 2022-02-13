@@ -71,16 +71,14 @@ function startTimer() {
   }, 1);
 }
 
-function render(depth: HTMLElement | number = level) {
+function render(depth: HTMLElement) {
   //   document.location.reload();
   document.querySelectorAll("button.level").forEach((x) => {
     x.classList.remove("primary");
   });
-  (depth as HTMLElement)?.classList?.add("primary");
+  depth.classList?.add("primary");
   treeRoot.innerHTML = "";
   stopTimer();
-
-  level =
-    depth instanceof HTMLElement ? +(depth as HTMLElement).innerHTML : depth;
+  level = +depth.innerHTML;
   tree("Mary", "Jain", level, treeRoot!);
 }
