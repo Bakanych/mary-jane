@@ -16,13 +16,10 @@ function tree(
   [a, b]
     .sort(() => Math.random() - 0.5)
     .forEach((x) => {
-      let link = document.createElement("button");
-      link.innerHTML = `<mark>${x}</mark>`;
       let li = document.createElement("li");
       let ul = document.createElement("ul");
-      li.innerHTML = `<button class=' node'>${x}</button>`;
+      li.innerHTML = `<button class='node'>${x}</button>`;
       target.appendChild(li);
-      //   li.appendChild(link);
       li.appendChild(ul);
       tree(a, b, depth - 1, ul);
     });
@@ -45,6 +42,8 @@ function getPath(): HTMLElement[] {
     .sort(() => Math.random() - 0.5)[0]
     .map((x) => x.querySelector("button")!);
   pathElement.innerHTML += randomPath.map((x) => x?.innerHTML).join(" . ");
+  randomPath.pop()?.onclick = () => clearInterval(timer);
+
   // randomPath.forEach((x) => x!.classList.add("secondary"));
 
   return randomPath;
@@ -56,6 +55,10 @@ function stopTimer() {
   startButton.innerText = "start";
   pathElement.innerHTML = "";
   timer = 0;
+  document.querySelectorAll<HTMLButtonElement>("button.node").forEach((x) => {
+    console.log(x.onclick);
+    x.onclick = null;
+  });
   return true;
 }
 function startTimer() {
@@ -72,7 +75,6 @@ function startTimer() {
 }
 
 function render(depth: HTMLElement) {
-  //   document.location.reload();
   document.querySelectorAll("button.level").forEach((x) => {
     x.classList.remove("primary");
   });
