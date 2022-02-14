@@ -7,12 +7,7 @@ const pathElement = document.getElementById("path")!;
 const startButton = document.getElementById("start")!;
 let timer: number;
 
-function generateTree(
-  a: string,
-  b: string,
-  depth: number,
-  target: HTMLElement
-): HTMLElement {
+function generateTree(a: string, b: string, depth: number, target: HTMLElement): HTMLElement {
   if (depth == 0) {
     return target;
   }
@@ -56,17 +51,14 @@ function onNodeClick(node: HTMLElement) {
   wasted();
 }
 
-function start() {
+function startGame() {
   startButton.setAttribute("disabled", "true");
 
-  stop();
+  stopGame();
 
   treeRoot.innerHTML = "";
   generateTree(mary, jane, level, treeRoot);
-  destiny = Array.from(
-    { length: level },
-    () => [mary, jane][Math.random() > 0.5 ? 0 : 1]
-  );
+  destiny = Array.from({ length: level }, () => [mary, jane][Math.random() > 0.5 ? 0 : 1]);
 
   pathElement.innerHTML = destiny.join(" . ");
   let start = Date.now();
@@ -80,19 +72,19 @@ function start() {
   startButton.removeAttribute("disabled");
 }
 
-function stop() {
+function stopGame() {
   clearInterval(timer);
   startButton.className = "secondary";
 }
 
 function wasted() {
-  stop();
+  stopGame();
   startButton.innerText = "wasted";
 }
 
 function onChangeLevel(button: HTMLButtonElement) {
   if (button.classList.contains("primary")) return;
-  stop();
+  stopGame();
   document.querySelectorAll("button.level").forEach((x) => {
     x.classList.remove("primary");
   });

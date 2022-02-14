@@ -4,10 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://minicss.org/flavorFiles/mini-dark.min.css"
-    />
+    <link rel="stylesheet" href="https://minicss.org/flavorFiles/mini-dark.min.css" />
     <link rel="stylesheet" href="style.css" />
     <title>Mary-Jane</title>
   </head>
@@ -18,18 +15,10 @@
         <div class="col-sm-10">
           <h1>
             Mary-Jane game of
-            <button
-              class="level primary"
-              onclick="onChangeLevel(this)"
-              class="level"
-            >
-              3
-            </button>
+            <button class="level primary" onclick="onChangeLevel(this)" class="level">3</button>
             <button onclick="onChangeLevel(this)" class="level">5</button>
             <button onclick="onChangeLevel(this)" class="level">10</button>
-            <button id="start" class="secondary" onclick="start(this)">
-              start
-            </button>
+            <button id="start" class="secondary" onclick="startGame(this)">start</button>
           </h1>
           <h2 id="path"></h2>
           <ul id="tree"></ul>
