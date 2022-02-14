@@ -30,6 +30,7 @@ function generateTree(a: string, b: string, depth: number, target: HTMLElement):
 
 function onNodeClick(node: HTMLElement) {
   if (!(node instanceof HTMLButtonElement)) return;
+  const path: HTMLElement[] = [];
   let i = level - 1;
   let parent = node.parentElement;
   while (parent && parent !== treeRoot) {
@@ -37,7 +38,9 @@ function onNodeClick(node: HTMLElement) {
       parent = parent.parentElement;
       continue;
     }
-    if (parent.firstChild.innerText !== destiny[i]) {
+    const button = parent.firstChild as HTMLButtonElement;
+    path.push(button);
+    if (button.innerText !== destiny[i]) {
       break;
     }
     i--;
@@ -46,9 +49,10 @@ function onNodeClick(node: HTMLElement) {
   if (i == -1) {
     clearInterval(timer);
     startButton.className = "tertiary";
+    path.forEach((x) => x.classList.add("tertiary"));
     return;
   }
-  wasted();
+  wasted(path[0]);
 }
 
 function startGame() {
@@ -77,9 +81,10 @@ function stopGame() {
   startButton.className = "secondary";
 }
 
-function wasted() {
+function wasted(target: HTMLElement) {
   stopGame();
   startButton.innerText = "wasted";
+  target.classList.add("secondary");
 }
 
 function onChangeLevel(button: HTMLButtonElement) {

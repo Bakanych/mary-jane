@@ -29,6 +29,7 @@ function generateTree(a, b, depth, target) {
 function onNodeClick(node) {
     if (!(node instanceof HTMLButtonElement))
         return;
+    var path = [];
     var i = level - 1;
     var parent = node.parentElement;
     while (parent && parent !== treeRoot) {
@@ -36,7 +37,9 @@ function onNodeClick(node) {
             parent = parent.parentElement;
             continue;
         }
-        if (parent.firstChild.innerText !== destiny[i]) {
+        var button = parent.firstChild;
+        path.push(button);
+        if (button.innerText !== destiny[i]) {
             break;
         }
         i--;
@@ -45,9 +48,10 @@ function onNodeClick(node) {
     if (i == -1) {
         clearInterval(timer);
         startButton.className = "tertiary";
+        path.forEach(function (x) { return x.classList.add("tertiary"); });
         return;
     }
-    wasted();
+    wasted(path[0]);
 }
 function startGame() {
     startButton.setAttribute("disabled", "true");
@@ -70,9 +74,10 @@ function stopGame() {
     clearInterval(timer);
     startButton.className = "secondary";
 }
-function wasted() {
+function wasted(target) {
     stopGame();
     startButton.innerText = "wasted";
+    target.classList.add("secondary");
 }
 function onChangeLevel(button) {
     var _a;
