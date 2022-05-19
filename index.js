@@ -1,25 +1,26 @@
-var level = 3;
-var destiny = [];
-var mary = "Mary";
-var jane = "Jane";
-var treeRoot = document.getElementById("tree");
-var pathElement = document.getElementById("path");
-var startButton = document.getElementById("start");
-var timer;
+"use strict";
+let level = 3;
+let destiny = [];
+const mary = "Mary";
+const jane = "Jane";
+const treeRoot = document.getElementById("tree");
+const pathElement = document.getElementById("path");
+const startButton = document.getElementById("start");
+let timer;
 function generateTree(a, b, depth, target) {
     if (depth == 0) {
         return target;
     }
     [a, b]
-        .sort(function () { return Math.random() - 0.5; })
-        .forEach(function (x) {
-        var button = document.createElement("button");
+        .sort(() => Math.random() - 0.5)
+        .forEach((x) => {
+        let button = document.createElement("button");
         button.classList.add("node");
         button.innerText = x;
-        button.onclick = function () { return onNodeClick(button); };
-        var li = document.createElement("li");
+        button.onclick = () => onNodeClick(button);
+        let li = document.createElement("li");
         li.appendChild(button);
-        var ul = document.createElement("ul");
+        let ul = document.createElement("ul");
         target.appendChild(li);
         li.appendChild(ul);
         generateTree(a, b, depth - 1, ul);
@@ -29,15 +30,15 @@ function generateTree(a, b, depth, target) {
 function onNodeClick(node) {
     if (!(node instanceof HTMLButtonElement))
         return;
-    var path = [];
-    var i = level - 1;
-    var parent = node.parentElement;
+    const path = [];
+    let i = level - 1;
+    let parent = node.parentElement;
     while (parent && parent !== treeRoot) {
         if (!(parent instanceof HTMLLIElement)) {
             parent = parent.parentElement;
             continue;
         }
-        var button = parent.firstChild;
+        const button = parent.firstChild;
         path.push(button);
         if (button.innerText !== destiny[i]) {
             break;
@@ -48,7 +49,7 @@ function onNodeClick(node) {
     if (i == -1) {
         clearInterval(timer);
         startButton.className = "tertiary";
-        path.forEach(function (x) { return x.classList.add("tertiary"); });
+        path.forEach((x) => x.classList.add("tertiary"));
         return;
     }
     wasted(path[0]);
@@ -58,15 +59,15 @@ function startGame() {
     stopGame();
     treeRoot.innerHTML = "";
     generateTree(mary, jane, level, treeRoot);
-    destiny = Array.from({ length: level }, function () { return [mary, jane][Math.random() > 0.5 ? 0 : 1]; });
+    destiny = Array.from({ length: level }, () => [mary, jane][Math.random() > 0.5 ? 0 : 1]);
     pathElement.innerHTML = destiny.join(" . ");
-    var start = Date.now();
-    timer = setInterval(function () {
-        var now = Date.now();
-        var diff = now - start;
-        var seconds = Math.floor(diff / 1000);
-        var milliseconds = diff % 1000;
-        startButton.innerText = seconds + "." + milliseconds;
+    let start = Date.now();
+    timer = setInterval(() => {
+        let now = Date.now();
+        let diff = now - start;
+        let seconds = Math.floor(diff / 1000);
+        let milliseconds = diff % 1000;
+        startButton.innerText = `${seconds}.${milliseconds}`;
     }, 1);
     startButton.removeAttribute("disabled");
 }
@@ -84,7 +85,7 @@ function onChangeLevel(button) {
     if (button.classList.contains("primary"))
         return;
     stopGame();
-    document.querySelectorAll("button.level").forEach(function (x) {
+    document.querySelectorAll("button.level").forEach((x) => {
         x.classList.remove("primary");
     });
     (_a = button.classList) === null || _a === void 0 ? void 0 : _a.add("primary");
